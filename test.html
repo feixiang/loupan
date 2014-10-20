@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>满堂红-楼盘信息抓取</title>
+		<style type="text/css">
+			*{
+				
+			}
+			.button{
+				width:100%;
+				padding:10px;
+				text-align: center;
+				border:2px solid #ccc;
+				margin:5px 0;
+				font-weight: bold;
+				cursor: pointer;
+			}
+		</style>
+		<script type="text/javascript" src="./resource/jquery-latest.pack.js"></script>
+	</head>
+
+	<body>
+		<h2>满堂红-楼盘信息抓取</h2>
+		<div class="button" onclick="start_fetch();">
+			开始
+		</div>
+		<div style="color:red;">如果遇到跨域问题，请在chrome的快捷方式后面加上 --disable-web-security</div>
+		<!--feixiang:这个是小区ID-->
+		<input type="hidden" name="estateId" id="estateId" value="1">
+		<input type="hidden" id="fromCityId" value="20">
+		<input type="hidden" id="city" value="gz">
+		<div class="lb_wap">
+			<div id="module6" align="center">
+
+			</div>
+		</div>
+		<div id="error"></div>
+		<script type="text/javascript" src="./resource/common.js"></script>
+		<script type="text/javascript" src="./resource/engine.js"></script>
+		<script type="text/javascript" src="./resource/loubaiCommon.js"></script>
+		<script type="text/javascript">
+			function start_fetch(){
+				// 这里的id可以设置的大一点，这样会把他们有的信息都找出来
+				var start = 1 , max = 10;
+				dwr.engine.setErrorHandler(myhandler);
+				for (var id = start; id < max; id++) {
+					init(id);
+				}
+			}
+			function load(id, content) {
+				// 这里对返回的html进行分析
+				var html = "";
+				var dom_loupan_name = $(content).find(".xxjs_rbar_ct01>ul>li>span")[1];
+				var loupan_name = dom_loupan_name.innerText;
+				var dom_loupan_info = $(content).find(".rct>p")[0];
+				var loupan_info = $.trim(dom_loupan_info.innerText);
+				if (loupan_info != "") {
+					html += "<p>楼盘名称：" + loupan_name + "</p>";
+					html += "<p>楼盘信息：" + loupan_info + "</p>";
+					$("body").append(html);
+					// 做你想做的事情，例如插入数据库
+					
+				}
+				
+			}
+
+			function callback(ret) {
+				if (ret.status == 1) {
+
+				} else {
+					$("body").append("failed");
+				}
+			}
+
+			// 暂时不对错误进行处理
+			function myhandler(message, ex) {
+				// $("#error").prepend("<p>" + message + "</p>");
+			}
+
+			function init(id) {
+				dwr.engine.setActiveReverseAjax(false);
+				loubaiCommon.getEstateInfo(id, false, {
+					callback : function(content) {
+						load(id, content);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>
