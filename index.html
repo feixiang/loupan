@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Spider</title>
+		<script type="text/javascript" src="./resource/jquery.js"></script>
+		<link rel="stylesheet" href="resource/bootstrap.min.css" />
+		<style>
+			img {
+				border: 1px solid #ccc;
+				margin: 5px;
+				width: 200px;
+				height: 200px;
+				padding: 2px;
+			}
+			.content-pic {
+				float: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container" style="margin-top:30px;">
+			<div class="row">
+				<div class="form-inline">
+					<div class="form-group">
+						<input id="min" value="4380" name="min" type="number" class="form-control" placeholder="min">
+					</div>
+					<div class="form-group">
+						<input id="max" value="4382" name="max" type="number" class="form-control" placeholder="max">
+					</div>
+					<button class="btn btn-primary" onclick="set();">设置</button>
+				</div>
+			</div>
+			<div class="row">
+				<button class="btn btn-default" onclick="du114()">
+					du114
+				</button>
+				<button class="btn btn-success" onclick="goon()">
+					继续
+				</button>
+				<button class="btn btn-success" onclick="print_list()">
+					打印
+				</button>
+				总数量：<strong id="cnt"></strong>
+			</div>
+			<div class="row">
+				<div id="list"></div>
+				<div id="success"></div>
+			</div>
+	</body>
+	<script type="text/javascript" src="./resource/common.js"></script>
+	<script type="text/javascript" src="./resource/index.js"></script>
+
+</html>
